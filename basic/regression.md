@@ -38,7 +38,7 @@ $$
 
 ## Pytorch实现
 
-#### 生成数据集
+### 生成数据集
 
 ``` python
 import torch
@@ -57,7 +57,7 @@ labels = true_w[0] * features[:, 0] + true_w[1] * features[:, 1] + true_b
 labels += torch.tensor(np.random.normal(0, 0.01, size=labels.size()), dtype=torch.float)
 ```
 
-#### 读取数据集
+### 读取数据集
 
 ``` python
 import torch.utils.data as Data
@@ -76,12 +76,12 @@ data_iter = Data.DataLoader(
 )
 ```
 
-#### 定义模型
+### 定义模型
 
 ``` python
 class LinearNet(nn.Module):
     def __init__(self, n_feature):
-        super(LinearNet, self).__init__()      # call father function to init 
+        super(LinearNet, self).__init__()      # call father function to init
         self.linear = nn.Linear(n_feature, 1)  # function prototype: `torch.nn.Linear(in_features, out_features, bias=True)`
 
     def forward(self, x):
@@ -109,7 +109,7 @@ net = nn.Sequential(OrderedDict([
         ]))
 ```
 
-#### 初始化模型参数
+### 初始化模型参数
 
 ```python
 from torch.nn import init
@@ -118,7 +118,7 @@ init.normal_(net[0].weight, mean=0.0, std=0.01)
 init.constant_(net[0].bias, val=0.0)  # or you can use `net[0].bias.data.fill_(0)` to modify it directly
 ```
 
-#### 定义损失函数与优化函数
+### 定义损失函数与优化函数
 
 ```python
 loss = nn.MSELoss()    # nn built-in squared loss function
@@ -130,7 +130,8 @@ optimizer = optim.SGD(net.parameters(), lr=0.03)   # built-in random gradient de
 # function prototype: `torch.optim.SGD(params, lr=, momentum=0, dampening=0, weight_decay=0, nesterov=False)
 ```
 
-#### 训练
+### 训练
+
 ``` python
 num_epochs = 3
 for epoch in range(1, num_epochs + 1):
@@ -140,5 +141,5 @@ for epoch in range(1, num_epochs + 1):
         optimizer.zero_grad() # reset gradient, equal to net.zero_grad()
         l.backward()
         optimizer.step()
-    print('epoch %d, loss: %f' % (epoch, l.item())) 
+    print('epoch %d, loss: %f' % (epoch, l.item()))
 ```
